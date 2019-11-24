@@ -27,48 +27,50 @@
     // TO DO: TEST
 
     // generator function
-    function generator() {
+    function generator(criteriaObject) {
+      // will generate array from criteriaObject
+      // will call stringMaker
+      // will call randomizer
+      // will return password
 
     }
     // TO DO: TEST
 
-    // concat function
-    function concat() {
+    // arrayMaker function
+    function arrayMaker(criteriaObject) {
+
+    }
+    // TO DO: TEST
+
+    // stringMaker function
+    function stringMaker() {
 
     }
     // TO DO: TEST
 
     // randomizer function
     function randomizer(arr, charList) {
-      var sequence = "";
       var password = "";
       for (var i = 0; i < arr[0]; i++) {
-        // TODO CLEAN THE FUCK UP
-        var charIndex = Math.floor(charList.length * Math.random())
-        console.log(charIndex);
-        var nextChar = charList.charAt(charIndex);
-        console.log(nextChar);
-        console.log(typeof nextChar);
+        var nextChar = charList.charAt(Math.floor(charList.length * Math.random()));
         password = password.concat(nextChar);
-        console.log(password);
-        // password.concat(charList.charAt(Math.floor(arr[0] * Math.random())));
-        // console.log(password);
       }
-      password = validator(password);
-      console.log("randomizer password return = " + password);
+      // console.log(password);
+      password = validator(arr, password);
+      // console.log("randomizer password return = " + password);
       return password;
     }
     // TO DO: TEST
 
     // validator function
-    // could this be more DRY?
+    // could this be more DRY? !!!!!
     // tricky little function
     // takes in the array of user inputs created by generator function
     // and the generated password from randomizer
     // and validates that it contains a character from each eligible
     // character list. if valid, it returns the input password,
     // if invalid, it calls randomizer again! in this way, randomizer
-    // is recursive!
+    // can be recursive!
     function validator(arr, password) {
       var valid = true;
       for (var i = 1; i < arr.length; i++) {
@@ -121,15 +123,34 @@
           i = password.length;
         }
       }
-      console.log("contains boolean return = " + valid)
+      // console.log("contains boolean return = " + valid)
       return valid;
     }
     // TO DO: TEST
 
     // test
-    var testArr = [30, true, true, false, true];
-    var testCharList = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var testPassword = randomizer(testArr, testCharList);
+    console.log("test 1")
+    var testArr1 = [30, true, true, false, true];
+    var testCharList1 = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var testPassword = randomizer(testArr1, testCharList1);
+    console.log(testPassword);
+
+    console.log("test 2")
+    var testArr2 = [95, false, false, false, true];
+    var testCharList2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var testPassword = randomizer(testArr2, testCharList2);
+    console.log(testPassword);
+
+    console.log("test 3")
+    var testArr3 = [120, true, true, true, true];
+    var testCharList3 = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var testPassword = randomizer(testArr3, testCharList3);
+    console.log(testPassword);
+
+    console.log("test 4")
+    var testArr4 = [12, true, true, true, true];
+    var testCharList4 = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var testPassword = randomizer(testArr4, testCharList4);
     console.log(testPassword);
 
 
