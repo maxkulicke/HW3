@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+
+  <!-- where "generate" button is clicked -->
+  <script>
+
+    // TODO
+
+    // four character strings
+    var specialChars = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
+    var numericChars = "0123456789";
+    var lowerChars = "abcdefghijklmnopqrstuvwxyz";
+    var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    // object maker function
+
+    // TO DO: TEST
+
+    // generator function
+    function generator() {
+
+    }
+    // TO DO: TEST
+
+    // concat function
+    function concat() {
+
+    }
+    // TO DO: TEST
+
+    // randomizer function
+    function randomizer(arr, charList) {
+      var sequence = "";
+      var password = "";
+      for (var i = 0; i < arr[0]; i++) {
+        // TODO CLEAN THE FUCK UP
+        var charIndex = Math.floor(charList.length * Math.random())
+        console.log(charIndex);
+        var nextChar = charList.charAt(charIndex);
+        console.log(nextChar);
+        console.log(typeof nextChar);
+        password = password.concat(nextChar);
+        console.log(password);
+        // password.concat(charList.charAt(Math.floor(arr[0] * Math.random())));
+        // console.log(password);
+      }
+      password = validator(password);
+      console.log("randomizer password return = " + password);
+      return password;
+    }
+    // TO DO: TEST
+
+    // validator function
+    // could this be more DRY?
+    // tricky little function
+    // takes in the array of user inputs created by generator function
+    // and the generated password from randomizer
+    // and validates that it contains a character from each eligible
+    // character list. if valid, it returns the input password,
+    // if invalid, it calls randomizer again! in this way, randomizer
+    // is recursive!
+    function validator(arr, password) {
+      var valid = true;
+      for (var i = 1; i < arr.length; i++) {
+        if (arr[i]) {
+          if (i === 1) {
+            valid = contains(password, specialChars);
+            if (!valid) {
+              i = arr.length;
+            }
+          }
+          else if (i === 2) {
+            valid = contains(password, numericChars);
+            if (!valid) {
+              i = arr.length;
+            }
+          }
+          else if (i === 3) {
+            valid = contains(password, lowerChars);
+            if (!valid) {
+              i = arr.length;
+            }
+          }
+          else if (i === 4) {
+            valid = contains(password, upperChars);
+            if (!valid) {
+              i = arr.length;
+            }
+          }
+        }
+      }
+      if (valid) {
+        console.log("validator password return = " + password)
+        return password;
+      }
+      else {
+        return randomizer(arr, charList);
+      }
+    }
+    // TO DO: TEST
+
+
+    // contains function
+    // checks to make sure password string (password) includes at least 
+    // 1 character from character set (charString), returns boolean (valid)
+    function contains(password, charString) {
+      var valid = false;
+      for (var i = 0; i < charString.length; i++) {
+        valid = password.includes(charString.charAt(i));
+        if (valid) {
+          i = password.length;
+        }
+      }
+      console.log("contains boolean return = " + valid)
+      return valid;
+    }
+    // TO DO: TEST
+
+    // test
+    var testArr = [30, true, true, false, true];
+    var testCharList = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    var testPassword = randomizer(testArr, testCharList);
+    console.log(testPassword);
+
+
+
+  </script>
+
+</body>
+
+</html>
