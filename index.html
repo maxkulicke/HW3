@@ -2,21 +2,22 @@
 <html lang="en">
 
 <head>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Password Generator</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 
 <body>
 
-
+  <!-- HTML EVENT? generate button clicked? -->
   <!-- where "generate" button is clicked -->
   <script>
 
-    // TODO
-
-    // four character strings
+    // four character set strings
     var specialChars = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
     // numericChars is tripled because of the statistical underrepresentation during random selection
     // helps to reduce invalid password returns from randomizer
@@ -24,19 +25,33 @@
     var lowerChars = "abcdefghijklmnopqrstuvwxyz";
     var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+    // TODO
+    // FORM INPUT
+    alert("Please complete the following forms to generate your random password");
+    // form input needs to validate numeric value between 8 - 120
+    var length = prompt("How long would you like your password to be? (passwords must be between 8 and 120 characters)");
+    alert("You will be asked to select which character sets your password will include");
+    alert("You must select at least one of the following four character sets: special characters, numbers, lowercase letters, uppercase letters");
+    // form input needs to validate that at least one charSet is selected
+    var special = confirm("Would you like to include special characters?");
+    var numeric = confirm("Would you like to include numbers?");
+    var lower = confirm("Would you like to include lowercase letters?");
+    var upper = confirm("Would you like to include uppercase letters?");
+    var criteria = objectMaker(length, special, numeric, lower, upper);
+    var password = generator(criteria);
+    alert("Your random password is: " + password);
+
     // object maker function
-    function objectMaker() {
+    function objectMaker(length, special, numeric, lower, upper) {
       var criteria = {
-        // un-hard code this!!!!!
-        length: 120,
-        special: true,
-        numeric: true,
-        lower: true,
-        upper: true,
+        length: length,
+        special: special,
+        numeric: numeric,
+        lower: lower,
+        upper: upper,
       }
       return criteria;
     }
-    // TO DO: TEST
 
     // generator function
     function generator(criteriaObject) {
@@ -91,9 +106,7 @@
         var nextChar = charList.charAt(Math.floor(charList.length * Math.random()));
         password = password.concat(nextChar);
       }
-      // console.log(password);
       password = validator(arr, password, charList);
-      // console.log("randomizer password return = " + password);
       return password;
     }
 
@@ -107,52 +120,39 @@
     // if invalid, it returns string "invalid password", which will
     // trigger a restart of the process in a different function
     function validator(arr, password, charList) {
-      // console.log("validator input password: " + password);
       var valid = true;
       for (var i = 1; i < arr.length; i++) {
-        // console.log("top of loop");
-        // console.log(i);
-        // console.log(valid);
         if (arr[i]) {
           if (i === 1) {
-            // console.log("checking for specialChars");
             valid = contains(password, specialChars);
             if (!valid) {
               i = arr.length;
             }
           }
           else if (i === 2) {
-            // console.log("checking for numericChars");
             valid = contains(password, numericChars);
             if (!valid) {
               i = arr.length;
             }
           }
           else if (i === 3) {
-            // console.log("checking for lowerChars");
             valid = contains(password, lowerChars);
             if (!valid) {
               i = arr.length;
             }
           }
           else if (i === 4) {
-            // console.log("checking for upperChars");
             valid = contains(password, upperChars);
             if (!valid) {
               i = arr.length;
             }
           }
         }
-        // console.log("bottom of loop");
-        // console.log(i);
-        // console.log(valid);
       }
       if (valid) {
-        // console.log("validated password return = " + password);
         return password;
       }
       else {
-        // console.log("invalid password!");
         var invalid = "invalid";
         return invalid;
       }
@@ -169,75 +169,21 @@
           i = charString.length;
         }
       }
-      // console.log("contains boolean return = " + valid)
       return valid;
     }
 
-    // TEST SECTION
-    for (var i = 0; i < 10; i++) {
-      console.log("TEST #" + i);
-
-      var criteria = objectMaker();
-      var password = generator(criteria);
-      console.log(password);
-
-      // console.log("randomizer/validator test A");
-      // var testArr1 = [120, true, true, false, true];
-      // var testCharList1 = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~01234567890123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      // var testPassword1 = randomizer(testArr1, testCharList1);
-      // // console.log(testPassword1);
-
-      // console.log("randomizer/validator test B");
-      // var testArr2 = [60, false, false, false, true];
-      // var testCharList2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      // var testPassword2 = randomizer(testArr2, testCharList2);
-      // // console.log(testPassword2);
-
-      // console.log("randomizer/validator test C");
-      // var testArr3 = [8, true, true, true, true];
-      // var testCharList3 = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~01234567890123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      // var testPassword3 = randomizer(testArr3, testCharList3);
-      // console.log(testPassword3);
-
-      // console.log("randomizer/validator test 4");
-      // var testArr4 = [27, true, true, true, true];
-      // var testCharList4 = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~01234567890123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-      // var testPassword4 = randomizer(testArr4, testCharList4);
-      // console.log(testPassword4);
-
-      // console.log("validator specific test");
-      // var testArr5 = [12, true, true, true, true];
-      // var testPassword5 = "aaaaaaaaaaaa";
-      // var validatedPassword = validator(testArr5, testPassword5);
-      // console.log(validatedPassword);
-
-      // console.log("stringMaker test A: only numeric and special");
-      // var arrA = [8, true, true, false, false];
-      // var charListA = stringMaker(arrA);
-      // console.log(charListA);
-      // console.log("should be: !#$%&'()*+,-./:;<=>?@[]^_`{|}~012345678901234567890123456789");
-
-      // console.log("stringMaker test B: all four charSets");
-      // var arrB = [30, true, true, true, true];
-      // var charListB = stringMaker(arrB);
-      // console.log(charListB);
-      // console.log("should be: !#$%&'()*+,-./:;<=>?@[]^_`{|}~012345678901234567890123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
-
-      // console.log("stringMaker test C: only numeric, lower and upper");
-      // var arrC = [75, false, true, true, true];
-      // var charListC = stringMaker(arrC);
-      // console.log(charListC);
-      // console.log("should be: 012345678901234567890123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
-
-      // console.log("stringMaker test D: only lower and upper");
-      // var arrD = [25, false, false, true, true];
-      // var charListD = stringMaker(arrD);
-      // console.log(charListD);
-      // console.log("should be: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
-
-    }
 
   </script>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 
 </body>
 
