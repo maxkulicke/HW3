@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Password Generator</title>
 </head>
 
 <body>
@@ -18,35 +18,71 @@
 
     // four character strings
     var specialChars = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~";
-    var numericChars = "0123456789";
+    // numericChars is tripled because of the statistical underrepresentation during random selection
+    // helps to reduce invalid password returns from randomizer
+    var numericChars = "012345678901234567890123456789";
     var lowerChars = "abcdefghijklmnopqrstuvwxyz";
     var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     // object maker function
-
+    function objectMaker() {
+      var criteria = {
+        // un-hard code this!!!!!
+        length: 120,
+        special: true,
+        numeric: true,
+        lower: true,
+        upper: true,
+      }
+      return criteria;
+    }
     // TO DO: TEST
 
     // generator function
     function generator(criteriaObject) {
       // will generate array from criteriaObject
+      var criteriaArray = arrayMaker(criteriaObject);
       // will call stringMaker
+      var charList = stringMaker(criteriaArray);
       // will call randomizer
+      var password = randomizer(criteriaArray, charList);
+      // !!! if "invalid password" call randomizer again !!!!
+      while (password === "invalid") {
+        console.log("invalid password encountered");
+        password = randomizer(criteriaArray, charList);
+      }
       // will return password
-
+      return password;
     }
-    // TO DO: TEST
 
     // arrayMaker function
     function arrayMaker(criteriaObject) {
-
+      var criteriaArray = [criteriaObject.length, criteriaObject.special,
+      criteriaObject.numeric, criteriaObject.lower, criteriaObject.upper];
+      return criteriaArray;
     }
-    // TO DO: TEST
 
     // stringMaker function
-    function stringMaker() {
-
+    function stringMaker(arr) {
+      var charList = "";
+      for (var i = 1; i < arr.length; i++) {
+        if (arr[i]) {
+          if (i === 1) {
+            charList = charList.concat(specialChars);
+          }
+          else if (i === 2) {
+            charList = charList.concat(numericChars);
+          }
+          else if (i === 3) {
+            charList = charList.concat(lowerChars);
+          }
+          else if (i === 4) {
+            charList = charList.concat(upperChars);
+          }
+        }
+      }
+      return charList;
     }
-    // TO DO: TEST
 
     // randomizer function
     function randomizer(arr, charList) {
@@ -56,11 +92,10 @@
         password = password.concat(nextChar);
       }
       // console.log(password);
-      password = validator(arr, password);
+      password = validator(arr, password, charList);
       // console.log("randomizer password return = " + password);
       return password;
     }
-    // TO DO: TEST
 
     // validator function
     // could this be more DRY? !!!!!
@@ -69,48 +104,59 @@
     // and the generated password from randomizer
     // and validates that it contains a character from each eligible
     // character list. if valid, it returns the input password,
-    // if invalid, it calls randomizer again! in this way, randomizer
-    // can be recursive!
-    function validator(arr, password) {
+    // if invalid, it returns string "invalid password", which will
+    // trigger a restart of the process in a different function
+    function validator(arr, password, charList) {
+      // console.log("validator input password: " + password);
       var valid = true;
       for (var i = 1; i < arr.length; i++) {
+        // console.log("top of loop");
+        // console.log(i);
+        // console.log(valid);
         if (arr[i]) {
           if (i === 1) {
+            // console.log("checking for specialChars");
             valid = contains(password, specialChars);
             if (!valid) {
               i = arr.length;
             }
           }
           else if (i === 2) {
+            // console.log("checking for numericChars");
             valid = contains(password, numericChars);
             if (!valid) {
               i = arr.length;
             }
           }
           else if (i === 3) {
+            // console.log("checking for lowerChars");
             valid = contains(password, lowerChars);
             if (!valid) {
               i = arr.length;
             }
           }
           else if (i === 4) {
+            // console.log("checking for upperChars");
             valid = contains(password, upperChars);
             if (!valid) {
               i = arr.length;
             }
           }
         }
+        // console.log("bottom of loop");
+        // console.log(i);
+        // console.log(valid);
       }
       if (valid) {
-        console.log("validator password return = " + password)
+        // console.log("validated password return = " + password);
         return password;
       }
       else {
-        return randomizer(arr, charList);
+        // console.log("invalid password!");
+        var invalid = "invalid";
+        return invalid;
       }
     }
-    // TO DO: TEST
-
 
     // contains function
     // checks to make sure password string (password) includes at least 
@@ -120,40 +166,76 @@
       for (var i = 0; i < charString.length; i++) {
         valid = password.includes(charString.charAt(i));
         if (valid) {
-          i = password.length;
+          i = charString.length;
         }
       }
       // console.log("contains boolean return = " + valid)
       return valid;
     }
-    // TO DO: TEST
 
-    // test
-    console.log("test 1")
-    var testArr1 = [30, true, true, false, true];
-    var testCharList1 = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var testPassword = randomizer(testArr1, testCharList1);
-    console.log(testPassword);
+    // TEST SECTION
+    for (var i = 0; i < 10; i++) {
+      console.log("TEST #" + i);
 
-    console.log("test 2")
-    var testArr2 = [95, false, false, false, true];
-    var testCharList2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var testPassword = randomizer(testArr2, testCharList2);
-    console.log(testPassword);
+      var criteria = objectMaker();
+      var password = generator(criteria);
+      console.log(password);
 
-    console.log("test 3")
-    var testArr3 = [120, true, true, true, true];
-    var testCharList3 = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var testPassword = randomizer(testArr3, testCharList3);
-    console.log(testPassword);
+      // console.log("randomizer/validator test A");
+      // var testArr1 = [120, true, true, false, true];
+      // var testCharList1 = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~01234567890123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      // var testPassword1 = randomizer(testArr1, testCharList1);
+      // // console.log(testPassword1);
 
-    console.log("test 4")
-    var testArr4 = [12, true, true, true, true];
-    var testCharList4 = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var testPassword = randomizer(testArr4, testCharList4);
-    console.log(testPassword);
+      // console.log("randomizer/validator test B");
+      // var testArr2 = [60, false, false, false, true];
+      // var testCharList2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      // var testPassword2 = randomizer(testArr2, testCharList2);
+      // // console.log(testPassword2);
 
+      // console.log("randomizer/validator test C");
+      // var testArr3 = [8, true, true, true, true];
+      // var testCharList3 = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~01234567890123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      // var testPassword3 = randomizer(testArr3, testCharList3);
+      // console.log(testPassword3);
 
+      // console.log("randomizer/validator test 4");
+      // var testArr4 = [27, true, true, true, true];
+      // var testCharList4 = "!#$%&'()*+,-./:;<=>?@[]^_`{|}~01234567890123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+      // var testPassword4 = randomizer(testArr4, testCharList4);
+      // console.log(testPassword4);
+
+      // console.log("validator specific test");
+      // var testArr5 = [12, true, true, true, true];
+      // var testPassword5 = "aaaaaaaaaaaa";
+      // var validatedPassword = validator(testArr5, testPassword5);
+      // console.log(validatedPassword);
+
+      // console.log("stringMaker test A: only numeric and special");
+      // var arrA = [8, true, true, false, false];
+      // var charListA = stringMaker(arrA);
+      // console.log(charListA);
+      // console.log("should be: !#$%&'()*+,-./:;<=>?@[]^_`{|}~012345678901234567890123456789");
+
+      // console.log("stringMaker test B: all four charSets");
+      // var arrB = [30, true, true, true, true];
+      // var charListB = stringMaker(arrB);
+      // console.log(charListB);
+      // console.log("should be: !#$%&'()*+,-./:;<=>?@[]^_`{|}~012345678901234567890123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+      // console.log("stringMaker test C: only numeric, lower and upper");
+      // var arrC = [75, false, true, true, true];
+      // var charListC = stringMaker(arrC);
+      // console.log(charListC);
+      // console.log("should be: 012345678901234567890123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+      // console.log("stringMaker test D: only lower and upper");
+      // var arrD = [25, false, false, true, true];
+      // var charListD = stringMaker(arrD);
+      // console.log(charListD);
+      // console.log("should be: abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+    }
 
   </script>
 
