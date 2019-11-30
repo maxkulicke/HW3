@@ -14,10 +14,15 @@
 
 <body>
 
+
   <nav class="navbar navbar-light bg-light">
     <span class="navbar-brand mb-0 h1">Max's Random Password Generator</span>
   </nav>
   <div class="container-fluid">
+    <!-- <div class="overlay">
+      <video class="loop" src="../HW3/assets/video/loop2.mp4" autoplay loop muted></video>
+      <img id="water" src="../HW3/assets/images/sunsetwater.jpg" class="img-fluid" alt="sunset">
+    </div> -->
     <div class="row">
     </div>
     <div class="row">
@@ -38,15 +43,21 @@
                     <!-- form -->
                     <form>
                       <div class="form">
-                        <label for="formGroupExampleInput">Select password length (between 8 - 120 characters):</label>
-                        <input type="text" class="form-control" id="passwordLengthInput" placeholder="required">
+                        <!-- TO DO: have to validate number (btwn 8-120) -->
+                        <label for="formGroupExampleInput">Password length (between 8 - 120 characters)</label>
+                        <input type="number" min="8" max="120" class="form-control" id="passwordLengthInput"
+                          placeholder="required">
                       </div>
                     </form>
+                    <br>
+                    <div class="text-muted">
+                      (at least one character set must be selected)
+                    </div>
                     <!-- special characters -->
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" value="" id="specialCharactersCheck">
                       <label class="form-check-label" for="defaultCheck1">
-                        Special Characters: !#$%&'()*+,-./:;<=>?@[]^_`{|}~
+                        Special characters: !#$%&'()*+,-./:;<=>?@[]^_`{|}~
                       </label>
                     </div>
                     <!-- numeric characters -->
@@ -60,25 +71,30 @@
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" value="" id="lowercaseLettersCheck">
                       <label class="form-check-label" for="defaultCheck1">
-                        Lowercase Letters: abcdefghijklmnopqrstuvwxyz
+                        Lowercase letters: abcdefghijklmnopqrstuvwxyz
                       </label>
                     </div>
                     <!-- uppercase letters -->
                     <div class="form-check">
                       <input class="form-check-input" type="checkbox" value="" id="uppercaseLettersCheck">
                       <label class="form-check-label" for="defaultCheck1">
-                        Uppercase Letters: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+                        Uppercase letters: ABCDEFGHIJKLMNOPQRSTUVWXYZ
                       </label>
                     </div>
+                    <br>
+                    <textarea class="form-control" rows="3" id="passwordDisplay"
+                      placeholder="Your Random Password"></textarea>
                 </div>
                 </p>
                 <!-- this button will trigger script -->
-                <!-- trigger popover? -->
-                <button type="button" class="btn btn-dark" onclick="governor(20, true, true, true, true)">Generate Password</button>
-                <a href="#" class="card-link">Generate Password</a>
+                <!-- should onclick getelements be in javascript? -->
+                <button type="button" class="btn btn-dark popover-test" id="generate"
+                  onclick="governor(document.getElementById('passwordLengthInput').value, 
+                document.getElementById('specialCharactersCheck').checked, document.getElementById('numericCharactersCheck').checked, 
+                document.getElementById('lowercaseLettersCheck').checked, document.getElementById('uppercaseLettersCheck').checked)">Generate
+                  Password</button>
                 <!-- TODO: button for clipboard should be disabled until password generated -->
-                <button type="button" class="btn btn-dark">Copy to Clipboard</button>
-                <a href="#" class="card-link">Copy to Clipboard</a>
+                <button type="button" class="btn btn-dark" onclick="clipboardCopy()">Copy to Clipboard</button>
               </div>
             </div>
           </div>
@@ -118,10 +134,60 @@
 
     // governor runs the show
     function governor(length, special, numeric, lower, upper) {
-      var criteria = objectMaker(length, special, numeric, lower, upper);
-      var password = generator(criteria);
-      console.log(password);
-      return password;
+      // console.log(length, special, numeric, lower, upper);
+      var validLength = lengthChecker();
+      console.log(validLength);
+      var validCheck = checkboxChecker();
+      console.log(validCheck);
+      if (validLength) {
+        if (validCheck) {
+          var criteria = objectMaker(length, special, numeric, lower, upper);
+          var password = generator(criteria);
+          // console.log(password);
+          document.getElementById("passwordDisplay").value = password;
+          return password;
+        }
+        else (alert("At lease one character set must be selected!"));
+      }
+      else (alert("Password length must be between 8 - 120 characters!"));
+    }
+
+    // copy to clipboard function
+    function clipboardCopy() {
+      var textArea = document.getElementById("passwordDisplay")
+      var password = textArea.value;
+      // console.log(password);
+      textArea.select();
+      textArea.setSelectionRange(0, 99999);
+      document.execCommand("copy");
+      alert("Copied your password: " + password);
+    }
+
+    // checks for valid input length
+    function lengthChecker() {
+      var valid = false;
+      var length = document.getElementById('passwordLengthInput').value;
+      if (length >= 8 && length <= 120) {
+        valid = true;
+      }
+      return valid;
+    }
+    // checks for at least one checked checkbox
+    function checkboxChecker() {
+      var checked = false;
+      if (document.getElementById("specialCharactersCheck").checked === true) {
+        checked = true;
+      }
+      else if (document.getElementById("numericCharactersCheck").checked === true) {
+        checked = true;
+      }
+      else if (document.getElementById("lowercaseLettersCheck").checked === true) {
+        checked = true;
+      }
+      else if (document.getElementById("uppercaseLettersCheck").checked === true) {
+        checked = true;
+      }
+      return checked;
     }
 
     // object maker function
