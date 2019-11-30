@@ -40,7 +40,7 @@ function governor(length, special, numeric, lower, upper) {
     }
     else (alert("At lease one character set must be selected!"));
   }
-  else (alert("Password length must be between 8 - 120 characters!"));
+  else (alert("Password length must be between 8 - 128 characters!"));
 }
 
 // copy to clipboard function
@@ -58,7 +58,7 @@ function clipboardCopy() {
 function lengthChecker() {
   var valid = false;
   var length = document.getElementById('passwordLengthInput').value;
-  if (length >= 8 && length <= 120) {
+  if (length >= 8 && length <= 128) {
     valid = true;
   }
   return valid;
