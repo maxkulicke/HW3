@@ -1,0 +1,33 @@
+.btn {
+  margin: 3px;
+}
+
+.overlay {
+  top: 0;
+}
+
+#begin {
+  position: absolute;
+  top: -585px;
+  left: 320px;  
+  width: 120px; 
+  height: 120px; 
+  border-radius: 60px; 
+  font-size: 30px; 
+  text-align: center; 
+  border-width: 0px;
+}
+
+#loop {
+  object-fit: cover;
+  margin-top: -350px;
+  margin-left: -290px;
+}
+
+#pool {
+  object-fit: cover;
+  position: absolute;
+  top: -90px;
+  opacity: 50%;
+
+}
