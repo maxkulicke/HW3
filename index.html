@@ -14,6 +14,11 @@
 
 <body>
 
+  <!-- TO DO: -->
+  <!-- Clear modal upon collapse -->
+  <!-- retool positioning of elements for better responsiveness using bootstrap grid -->
+  <!--  -->
+
 
   <nav class="navbar navbar-light bg-transparent">
     <span class="navbar-brand mb-0 h1">Max's Random Password Generator</span>
@@ -30,13 +35,13 @@
       </div>
       <div class="col-md-8">
         <!-- modal -->
-        <div class="modal fade" id="myModal" role="dialog">
+        <div class="modal fade static" id="myModal" data-backdrop="static" role="dialog">
           <div class="modal-dialog modal-dialog-centered">
             <!-- card -->
             <div class="modal-content">
               <div class="card">
                 <div class="card-body">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <button type="button" class="close" data-dismiss="modal" onclick="clearForm()">&times;</button>
                   <h5 class="card-title">Random Password Generator</h5>
                   <h6 class="card-subtitle mb-2 text-muted">Select your password criteria below</h6>
                   <p class="card-text">
@@ -87,20 +92,19 @@
                 </div>
                 </p>
                 <!-- this button will trigger script -->
-                <!-- should onclick getelements be in javascript? -->
                 <button type="button" class="btn btn-dark popover-test" id="generate"
                   onclick="governor(document.getElementById('passwordLengthInput').value, 
                 document.getElementById('specialCharactersCheck').checked, document.getElementById('numericCharactersCheck').checked, 
                 document.getElementById('lowercaseLettersCheck').checked, document.getElementById('uppercaseLettersCheck').checked)">Generate
                   Password</button>
-                <!-- TODO: button for clipboard should be disabled until password generated -->
                 <button type="button" class="btn btn-dark" onclick="clipboardCopy()">Copy to Clipboard</button>
               </div>
             </div>
           </div>
         </div>
-        <!-- TODO: Generate button should trigger modal and the generation script -->
-        <button type="button" class="btn btn-dark" id="begin" data-toggle="modal" data-target="#myModal">Click to Begin</button>
+        <!-- opens modal -->
+        <button type="button" class="btn btn-dark" id="begin" data-toggle="modal" data-target="#myModal">Click to
+          Begin</button>
       </div>
     </div>
   </div>

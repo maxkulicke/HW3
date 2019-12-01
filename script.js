@@ -8,21 +8,6 @@ var numericChars = "012345678901234567890123456789";
 var lowerChars = "abcdefghijklmnopqrstuvwxyz";
 var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-// PROMPTS/CONFIRMS
-// alert("Please complete the following forms to generate your random password");
-// // form input needs to validate numeric value between 8 - 120
-// var length = prompt("How long would you like your password to be? (passwords must be between 8 and 120 characters)");
-// alert("You will be asked to select which character sets your password will include");
-// alert("You must select at least one of the following four character sets: special characters, numbers, lowercase letters, uppercase letters");
-// // form input needs to validate that at least one charSet is selected
-// var special = confirm("Would you like to include special characters?");
-// var numeric = confirm("Would you like to include numbers?");
-// var lower = confirm("Would you like to include lowercase letters?");
-// var upper = confirm("Would you like to include uppercase letters?");
-// var criteria = objectMaker(length, special, numeric, lower, upper);
-// var password = generator(criteria);
-// alert("Your random password is: " + password);
-
 // governor runs the show
 function governor(length, special, numeric, lower, upper) {
   // console.log(length, special, numeric, lower, upper);
@@ -63,6 +48,7 @@ function lengthChecker() {
   }
   return valid;
 }
+
 // checks for at least one checked checkbox
 function checkboxChecker() {
   var checked = false;
@@ -79,6 +65,16 @@ function checkboxChecker() {
     checked = true;
   }
   return checked;
+}
+
+// resets the modal form to default empty values when closed
+function clearForm() {
+  document.getElementById('passwordLengthInput').value = null;
+  document.getElementById("specialCharactersCheck").checked = false;
+  document.getElementById("numericCharactersCheck").checked = false;
+  document.getElementById("lowercaseLettersCheck").checked = false;
+  document.getElementById("uppercaseLettersCheck").checked = false;
+  document.getElementById("passwordDisplay").value = null;
 }
 
 // object maker function
