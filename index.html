@@ -20,27 +20,24 @@
   <!--  -->
 
 
-  <nav class="navbar navbar-light bg-transparent">
-    <span class="navbar-brand mb-0 h1">Max's Random Password Generator</span>
-  </nav>
-  <div class="container-fluid">
 
-    <!-- <div class="row">
-    </div> -->
+  <div class="container-fluid">
     <div class="row">
+      <nav class="navbar navbar-light bg-transparent">
+        <span class="navbar-brand mb-0 h1">Max's Random Password Generator</span>
+      </nav>
       <div class="overlay">
         <video id="loop" src="../HW3/assets/video/loop2.mp4" autoplay loop muted></video>
-        <!-- <img class="img-fluid" id="pool" src="../HW3/assets/images/pool.jpg" alt="pool"> -->
       </div>
-      <div class="col-md-2">
+      <div class="col-md-4">
       </div>
-      <div class="col-md-8">
+      <div class="col-md-4 d-flex justify-content-center">
         <!-- modal -->
         <div class="modal fade static" id="myModal" data-backdrop="static" role="dialog">
           <div class="modal-dialog modal-dialog-centered">
             <!-- card -->
             <div class="modal-content">
-              <div class="card">
+              <div class="card float-none">
                 <div class="card-body">
                   <button type="button" class="close" data-dismiss="modal" onclick="clearForm()">&times;</button>
                   <h5 class="card-title">Random Password Generator</h5>
@@ -107,10 +104,17 @@
         <button type="button" class="btn btn-dark" id="begin" data-toggle="modal" data-target="#myModal">Click to
           Begin</button>
       </div>
+      <div class="col-md-4">
+      </div>
     </div>
   </div>
-  <div class="col-md-2">
-  </div>
+
+  <footer class="footer">
+    <div class="container pos-f-b d-flex justify-content-center">
+      <span class="badge badge-light">© 2019 Copyright</span>
+    </div>
+  </footer>
+
 
   <script src="./script.js"></script>
 
