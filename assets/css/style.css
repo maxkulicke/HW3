@@ -2,6 +2,10 @@
   margin: 3px;
 }
 
+.form-check {
+  margin: 3px;
+}
+
 .overlay {
   top: 0;
 }
@@ -28,10 +32,3 @@
   margin-left: -290px;
 }
 
-#pool {
-  object-fit: cover;
-  position: absolute;
-  top: -90px;
-  opacity: 50%;
-
-}

@@ -10,16 +10,12 @@ var upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 // governor runs the show
 function governor(length, special, numeric, lower, upper) {
-  // console.log(length, special, numeric, lower, upper);
   var validLength = lengthChecker();
-  // console.log(validLength);
   var validCheck = checkboxChecker();
-  // console.log(validCheck);
   if (validLength) {
     if (validCheck) {
       var criteria = objectMaker(length, special, numeric, lower, upper);
       var password = generator(criteria);
-      // console.log(password);
       document.getElementById("passwordDisplay").value = password;
       return password;
     }
@@ -32,7 +28,6 @@ function governor(length, special, numeric, lower, upper) {
 function clipboardCopy() {
   var textArea = document.getElementById("passwordDisplay")
   var password = textArea.value;
-  // console.log(password);
   textArea.select();
   textArea.setSelectionRange(0, 99999);
   document.execCommand("copy");
@@ -91,18 +86,13 @@ function objectMaker(length, special, numeric, lower, upper) {
 
 // generator function
 function generator(criteriaObject) {
-  // will generate array from criteriaObject
   var criteriaArray = arrayMaker(criteriaObject);
-  // will call stringMaker
   var charList = stringMaker(criteriaArray);
-  // will call randomizer
   var password = randomizer(criteriaArray, charList);
   // !!! if "invalid password" call randomizer again !!!!
   while (password === "invalid") {
-    // console.log("invalid password encountered");
     password = randomizer(criteriaArray, charList);
   }
-  // will return password
   return password;
 }
 
