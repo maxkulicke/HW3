@@ -39,4 +39,6 @@ Upon review, I probably could have eleminated one step, either the object creati
 
 As for the front end, I wanted it to be fairly simple and straightforward. I didn't like the idea of having a box and checkboxes on the page itself, I wanted that stuff to come up only when needed, hence the modal. The animation in the background was just because I could do it, and I thought it looked cool. It's probably not a great idea in reality, I found it loading horribly slowly on my phone (although that could be partly the github hosting), and additionally, the user can actually access the animation loop as a video if they right click on it, which is probably not ideal. That being said, for the sake of the homework, i figured it would be ok, it looks cool and adds a little flair to an otherwise utilitarian piece of machinery.
 
+One bug I still haven't figured out how to solve is that with nothing in the modal form selected, or with the length form selected, if the user hits enter, it closes the modal and clears all the forms. This seems to be some default behavior, and as of yet I haven't figured out how to disable it. It's a small thing, but it really bugs me.
+
 Overall, really enjoyed this one.
