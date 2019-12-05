@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
+<!-- TODO: -->
+<!-- enter closes modal? -->
+<!-- just generally reexamine your docmument interactions -->
+<!-- README! -->
 <head>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -84,9 +89,9 @@
                 </p>
                 <!-- this button will trigger script -->
                 <button type="button" class="btn btn-dark popover-test" id="generate"
-                  onclick="governor(document.getElementById('passwordLengthInput').value, 
-                document.getElementById('specialCharactersCheck').checked, document.getElementById('numericCharactersCheck').checked, 
-                document.getElementById('lowercaseLettersCheck').checked, document.getElementById('uppercaseLettersCheck').checked)">Generate
+                  onclick="governor(document.querySelector('passwordLengthInput').value, 
+                document.querySelector('#specialCharactersCheck').checked, document.querySelector('#numericCharactersCheck').checked, 
+                document.querySelector('#lowercaseLettersCheck').checked, document.querySelector('#uppercaseLettersCheck').checked)">Generate
                   Password</button>
                 <button type="button" class="btn btn-dark" onclick="clipboardCopy()">Copy to Clipboard</button>
               </div>
