@@ -44,7 +44,6 @@
                     <!-- form -->
                     <form>
                       <div class="form">
-                        <!-- TO DO: have to validate number (btwn 8-120) -->
                         <label for="formPasswordLengthInput">Password length (between 8 - 128 characters)</label>
                         <input type="number" min="8" max="128" class="form-control" id="passwordLengthInput"
                           placeholder="required">
@@ -89,7 +88,7 @@
                 </p>
                 <!-- this button will trigger script -->
                 <button type="button" class="btn btn-dark popover-test" id="generate"
-                  onclick="governor(document.querySelector('passwordLengthInput').value, 
+                  onclick="governor(document.querySelector('#passwordLengthInput').value, 
                 document.querySelector('#specialCharactersCheck').checked, document.querySelector('#numericCharactersCheck').checked, 
                 document.querySelector('#lowercaseLettersCheck').checked, document.querySelector('#uppercaseLettersCheck').checked)">Generate
                   Password</button>
