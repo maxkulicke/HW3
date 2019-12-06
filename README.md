@@ -42,3 +42,7 @@ As for the front end, I wanted it to be fairly simple and straightforward. I did
 One bug I still haven't figured out how to solve is that with nothing in the modal form selected, or with the length form selected, if the user hits enter, it closes the modal and clears all the forms. This seems to be some default behavior, and as of yet I haven't figured out how to disable it. It's a small thing, but it really bugs me.
 
 Overall, really enjoyed this one.
+
+Here's my screenshot:
+
+![screenshot of program](../HW3/assets/images/passwordGeneratorScreenshot.png)
