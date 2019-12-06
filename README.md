@@ -45,4 +45,4 @@ Overall, really enjoyed this one.
 
 Here's my screenshot:
 
-![screenshot of program](../HW3/assets/images/passwordGeneratorScreenshot.png)
+![screenshot of program](passwordGeneratorScreenshot.png)
