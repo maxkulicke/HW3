@@ -1,6 +1,8 @@
 # HW3
 password generator
 
+https://maxkulicke.github.io/HW3/
+
 This is my take on a random password generator. The form generally follows the parameters defined in the homework description, with a few deviations:
 
 - instead of prompts/confirms, I used a modal form. I implemeneted the prompts/confirms initially, but found them awkward and cumbersome from a user perspective, and felt like a single interface where a user could see all of the options at once, change their mind etc was a more useful and practical way to do it.
